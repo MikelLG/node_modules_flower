@@ -60,7 +60,18 @@ FlowerPower.discover(function(flowerPower) {
       console.log('connectAndSetup');
       flowerPower.connectAndSetup(callback);
     },
-    
+    function(callback) {
+        console.log('readFirmwareRevision');
+        flowerPower.readFirmwareRevision(function(error, firmwareRevision) {
+          console.log('\tfirmware revision = ' + firmwareRevision);
+  
+          var version = firmwareRevision.split('_')[1].split('-')[1];
+  
+          hasCalibratedData = (version >= '1.1.0');
+  
+          callback();
+        }); 
+    },
     function(callback) {
       console.log('readSoilTemperature');
       flowerPower.readSoilTemperature(function(error, temperature) {
